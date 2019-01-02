@@ -61,6 +61,7 @@ fn new_event(input_line: String) -> StampedEvent {
 }
 
 fn main() {
+    // Part 1
     let puzzle = include_str!("input.txt");
     let mut events = Vec::new();
     for line in puzzle.lines() {
@@ -95,7 +96,13 @@ fn main() {
             max_sum = sum;
         }
     }
-    let max_minute = minutes_asleep[&max_key].iter().enumerate().max_by(|a, b| a.1.cmp(b.1));
+    let mut max_minute = minutes_asleep[&max_key].iter().enumerate().max_by(|a, b| a.1.cmp(b.1));
     println!("guard: {:?}", max_key);
     println!("minute: {:?}", max_minute);
+    // Part 2
+    let part_2 = minutes_asleep.iter().max_by(|a, b| {
+        a.1.iter().max().cmp(&b.1.iter().max())
+    });
+    max_minute =  part_2.unwrap().1.iter().enumerate().max_by(|a, b| a.1.cmp(b.1));
+    println!("{:?}", *part_2.unwrap().0 as usize * max_minute.unwrap().0);
 }
